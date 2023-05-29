@@ -1,10 +1,12 @@
 ﻿namespace AppointmentsAPI.Application.Abstraction.AggregatesModels.AppointmentAggregate
 {
-    public record AppointmentsFiltrationModel(DateOnly Date = default,
-                                              string doctorFirstName = "",
-                                              string doctorMiddleName = "",
-                                              string doctorLastName = "",
-                                              string serviceName = "",
-                                              bool status = default,
-                                              Guid OfficeId = default);
+    public class AppointmentsFiltrationModel
+    {
+        public DateOnly Date { get; set; } = default;
+        public string DoctorFirstName { get; set; } = "";
+        public string DoctorMiddleName { get; set; } = "";
+        public string DoctorLastName { get; set; } = "";
+        public string ServiceName { get; set; } = "";
+        public bool Status { get; set; } = default;
+    }
 }
