@@ -6,7 +6,5 @@
             : base($"appointment result with ID = {id} does not exist")
         {
         }
-        {
-        }
     }
 }

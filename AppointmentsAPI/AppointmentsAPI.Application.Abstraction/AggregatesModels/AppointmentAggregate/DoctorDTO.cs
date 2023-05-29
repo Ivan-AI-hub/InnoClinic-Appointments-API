@@ -1,14 +1,14 @@
-﻿namespace AppointmentsAPI.Domain
+﻿namespace AppointmentsAPI.Application.Abstraction.AggregatesModels.AppointmentAggregate
 {
-    public class Patient
+    public class DoctorDTO
     {
-        public Guid Id { get; private set; } = Guid.NewGuid();
+        public Guid Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string MiddleName { get; set; }
-        private Patient() { }
-        public Patient(string firstName, string lastName, string middleName)
+        public DoctorDTO(Guid id, string firstName, string lastName, string middleName)
         {
+            Id = id;
             FirstName = firstName;
             LastName = lastName;
             MiddleName = middleName;
