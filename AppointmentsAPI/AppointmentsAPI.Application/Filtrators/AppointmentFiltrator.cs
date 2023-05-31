@@ -13,7 +13,9 @@ namespace AppointmentsAPI.Application.Filtrators
             query = DoctorMiddleName != "" ? query.Where(x => x.Doctor.MiddleName == DoctorMiddleName) : query;
             query = DoctorLastName != "" ? query.Where(x => x.Doctor.LastName == DoctorLastName) : query;
             query = ServiceName != "" ? query.Where(x => x.Service.Name == ServiceName) : query;
-            query = Status != default ? query.Where(x => x.IsApproved == Status) : query;
+            query = Status != null ? query.Where(x => x.IsApproved == Status) : query;
+            query = PatientId != default ? query.Where(x => x.PatientId == PatientId) : query;
+            query = DoctorId != default ? query.Where(x => x.DoctorId == DoctorId) : query;
 
             return query;
         }
