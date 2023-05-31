@@ -16,6 +16,21 @@ namespace AppointmentsAPI.Persistence.Repositories
 
         public async Task AddAsync(Appointment appointment, CancellationToken cancellationToken = default)
         {
+            if (await _appointmentsContext.Doctors.AnyAsync(x => x.Id == appointment.DoctorId))
+            {
+                appointment.Doctor = _appointmentsContext.Doctors.First(x => x.Id == appointment.DoctorId);
+            }
+
+            if (await _appointmentsContext.Patients.AnyAsync(x => x.Id == appointment.PatientId))
+            {
+                appointment.Patient = _appointmentsContext.Patients.First(x => x.Id == appointment.PatientId);
+            }
+
+            if (await _appointmentsContext.Services.AnyAsync(x => x.Id == appointment.ServiceId))
+            {
+                appointment.Service = _appointmentsContext.Services.First(x => x.Id == appointment.ServiceId);
+            }
+
             await _appointmentsContext.Appointments.AddAsync(appointment, cancellationToken);
             await _appointmentsContext.SaveChangesAsync(cancellationToken);
         }
@@ -56,7 +71,7 @@ namespace AppointmentsAPI.Persistence.Repositories
 
         }
 
-        public async Task RescheduleAsync(Guid id, Doctor doctor, DateOnly date, TimeOnly time, CancellationToken cancellationToken = default)
+        public async Task RescheduleAsync(Guid id, Guid doctorId, DateOnly date, TimeOnly time, CancellationToken cancellationToken = default)
         {
             var appointment = await _appointmentsContext.Appointments
                                             .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
@@ -64,8 +79,12 @@ namespace AppointmentsAPI.Persistence.Repositories
             {
                 throw new AppointmentNotFoundException(id);
             }
+            if (appointment.IsApproved == true)
+            {
+                throw new AppointmentAlreadyApproved(id);
+            }
 
-            appointment.Doctor = doctor;
+            appointment.DoctorId = doctorId;
             appointment.Date = date;
             appointment.Time = time;
             await _appointmentsContext.SaveChangesAsync(cancellationToken);
@@ -76,7 +95,6 @@ namespace AppointmentsAPI.Persistence.Repositories
             return _appointmentsContext.Appointments.Include(x => x.Service)
                                                     .Include(x => x.Patient)
                                                     .Include(x => x.Doctor)
-                                                    .Include(x => x.Result)
                                                     .AsNoTracking();
         }
 

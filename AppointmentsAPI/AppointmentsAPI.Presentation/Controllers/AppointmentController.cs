@@ -22,7 +22,7 @@ namespace AppointmentsAPI.Presentation.Controllers
             return Ok(appointment);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{id}/approve")]
         public async Task<IActionResult> ApproveAppointment(Guid id, CancellationToken cancellationToken = default)
         {
             await _appointmentService.ApproveAppointmentAsync(id, cancellationToken);
@@ -44,11 +44,11 @@ namespace AppointmentsAPI.Presentation.Controllers
             return Accepted();
         }
 
-        [HttpPut("{id}/{date}/{time}/reschedule")]
-        public async Task<IActionResult> RescheduleAppointment([FromRoute] Guid id, [FromBody] DoctorDTO doctor,
-            [FromRoute] DateOnly date, [FromRoute] TimeOnly time, CancellationToken cancellationToken = default)
+        [HttpPut("{id}/reschedule")]
+        public async Task<IActionResult> RescheduleAppointment([FromRoute] Guid id, Guid doctorId,
+            DateOnly date, TimeOnly time, CancellationToken cancellationToken = default)
         {
-            await _appointmentService.RescheduleAppointmentAsync(id, doctor, date, time, cancellationToken);
+            await _appointmentService.RescheduleAppointmentAsync(id, doctorId, date, time, cancellationToken);
             return Accepted();
         }
     }

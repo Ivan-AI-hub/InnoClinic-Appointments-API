@@ -32,9 +32,9 @@ namespace AppointmentsAPI.Presentation.Controllers
 
         [Route("{appointmentId}/result")]
         [HttpGet]
-        public IActionResult GetResultByAppointmentAsync(Guid appointmentId, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> GetResultByAppointmentAsync(Guid appointmentId, CancellationToken cancellationToken = default)
         {
-            var result = _resultService.GetResultByAppointmentAsync(appointmentId, cancellationToken);
+            var result = await _resultService.GetResultByAppointmentAsync(appointmentId, cancellationToken);
             return Ok(result);
         }
     }

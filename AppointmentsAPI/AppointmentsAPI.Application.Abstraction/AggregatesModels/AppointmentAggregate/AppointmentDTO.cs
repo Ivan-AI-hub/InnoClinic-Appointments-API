@@ -8,8 +8,9 @@
         public bool IsApproved { get; set; }
         public PatientDTO Patient { get; set; }
         public DoctorDTO Doctor { get; set; }
-        public ServiceDTO ServiceDTO { get; set; }
+        public ServiceDTO Service { get; set; }
 
+        public AppointmentDTO() { }
         public AppointmentDTO(Guid id, DateOnly date, TimeOnly time, bool isApproved, PatientDTO patient, DoctorDTO doctor, ServiceDTO serviceDTO)
         {
             Id = id;
@@ -18,7 +19,7 @@
             IsApproved = isApproved;
             Patient = patient;
             Doctor = doctor;
-            ServiceDTO = serviceDTO;
+            Service = serviceDTO;
         }
     }
 }

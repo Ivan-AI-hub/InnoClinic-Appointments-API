@@ -65,6 +65,7 @@ namespace AppointmentsAPI.Web.Extensions
                         new List<string>()
                     }
                 });
+                s.UseDateOnlyTimeOnlyStringConverters();
             });
         }
     }

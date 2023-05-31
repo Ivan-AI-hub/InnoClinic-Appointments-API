@@ -3,6 +3,7 @@ using System;
 using AppointmentsAPI.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AppointmentsAPI.Persistence.Migrations
 {
     [DbContext(typeof(AppointmentsContext))]
-    partial class AppointmentsContextModelSnapshot : ModelSnapshot
+    [Migration("20230531104013_RemoveResultKey")]
+    partial class RemoveResultKey
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

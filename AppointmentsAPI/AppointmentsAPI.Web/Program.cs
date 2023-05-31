@@ -2,6 +2,7 @@ using AppointmentsAPI.Application.Mappings;
 using AppointmentsAPI.Application.Validators;
 using AppointmentsAPI.Presentation.Controllers;
 using AppointmentsAPI.Web.Extensions;
+using AppointmentsAPI.Web.Middlewares;
 using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,7 +19,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddAuthorization();
 builder.Services.AddAutoMapper(typeof(ApplicationMappingProfile));
 builder.Services.AddValidatorsFromAssemblyContaining<CreateAppointmentValidator>();
-
+builder.Services.AddDateOnlyTimeOnlyStringConverters();
 
 var app = builder.Build();
 
@@ -28,6 +29,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseMiddleware<ExceptionMiddleware>();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

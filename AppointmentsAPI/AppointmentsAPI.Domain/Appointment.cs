@@ -7,32 +7,29 @@
         private Service? _service;
         private Result? _result;
 
-        public Guid Id { get; private set; }
+        public Guid Id { get; private set; } = Guid.NewGuid();
         public DateOnly Date { get; set; }
         public TimeOnly Time { get; set; }
         public bool IsApproved { get; set; }
         public Guid PatientId { get; private set; }
-        public Guid DoctorId { get; private set; }
+        public Guid DoctorId { get; set; }
         public Guid ServiceId { get; private set; }
-        public Guid? ResultId { get; private set; }
 
         private Appointment() { }
-        public Appointment(Patient patient, Doctor doctor, Service service, Result? result, DateOnly date, TimeOnly time, bool isApproved)
+        public Appointment(Patient patient, Doctor doctor, Service service, DateOnly date, TimeOnly time, bool isApproved)
         {
             Patient = patient;
             Doctor = doctor;
             Service = service;
-            Result = result;
             Date = date;
             Time = time;
             IsApproved = isApproved;
         }
-        public Appointment(Guid patientId, Guid doctorId, Guid serviceId, Guid resultId, DateOnly date, TimeOnly time, bool isApproved)
+        public Appointment(Guid patientId, Guid doctorId, Guid serviceId, DateOnly date, TimeOnly time, bool isApproved)
         {
             PatientId = patientId;
             DoctorId = doctorId;
             ServiceId = serviceId;
-            ResultId = resultId;
             Date = date;
             Time = time;
             IsApproved = isApproved;
@@ -52,11 +49,6 @@
         {
             get => _service;
             set { _service = value; ServiceId = value != null ? value.Id : ServiceId; }
-        }
-        public Result? Result
-        {
-            get => _result;
-            set { _result = value; ResultId = value != null ? value.Id : ResultId; }
         }
     }
 }

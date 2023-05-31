@@ -8,7 +8,7 @@ namespace AppointmentsAPI.Persistence.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<Result> builder)
         {
-            builder.HasOne(x => x.Appointment).WithOne(x => x.Result).HasForeignKey<Appointment>(x => x.Id);
+            builder.HasOne(x => x.Appointment);
             builder.HasIndex(x => x.AppointmentId).IsUnique();
         }
     }
