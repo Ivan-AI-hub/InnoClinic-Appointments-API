@@ -24,7 +24,7 @@ namespace AppointmentsAPI.Persistence.Repositories
         {
             var appointment = await _appointmentsContext.Appointments
                                                         .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
-            if(appointment == null)
+            if (appointment == null)
             {
                 throw new AppointmentNotFoundException(id);
             }
@@ -51,9 +51,9 @@ namespace AppointmentsAPI.Persistence.Repositories
             var appointments = GetFullDataAppointments();
             appointments = filtrator.Filtrate(appointments);
             appointments = appointments.OrderBy(x => x.Date);
-            appointments = appointments.Skip(pageSize*(pageNumber-1)).Take(pageSize);
+            appointments = appointments.Skip(pageSize * (pageNumber - 1)).Take(pageSize);
             return await appointments.ToListAsync(cancellationToken);
-            
+
         }
 
         public async Task RescheduleAsync(Guid id, Doctor doctor, DateOnly date, TimeOnly time, CancellationToken cancellationToken = default)

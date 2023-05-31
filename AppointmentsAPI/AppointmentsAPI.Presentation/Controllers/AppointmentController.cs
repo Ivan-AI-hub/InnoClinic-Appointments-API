@@ -22,34 +22,31 @@ namespace AppointmentsAPI.Presentation.Controllers
             return Ok(appointment);
         }
 
-        [Route("{id}")]
-        [HttpPut]
+        [HttpPut("{id}")]
         public async Task<IActionResult> ApproveAppointment(Guid id, CancellationToken cancellationToken = default)
         {
             await _appointmentService.ApproveAppointmentAsync(id, cancellationToken);
             return Accepted();
         }
 
-        [Route("{pageSize}/{pageNumber}")]
-        [HttpGet]
-        public async Task<IActionResult> GetAppointments(int pageSize, int pageNumber, 
+        [HttpGet("{pageSize}/{pageNumber}")]
+        public async Task<IActionResult> GetAppointments(int pageSize, int pageNumber,
             [FromQuery] AppointmentsFiltrationModel filtrationModel, CancellationToken cancellationToken = default)
         {
             var appointments = await _appointmentService.GetAppointmentsAsync(pageSize, pageNumber, filtrationModel, cancellationToken);
             return Ok(appointments);
         }
 
-        [Route("{id}/cancel")]
-        [HttpPut]
+        [HttpPut("{id}/cancel")]
         public async Task<IActionResult> CancelAppointment(Guid id, CancellationToken cancellationToken = default)
         {
             await _appointmentService.CancelAppointmentAsync(id, cancellationToken);
             return Accepted();
         }
 
-        [Route("{id}/reschedule")]
-        [HttpPut]
-        public async Task<IActionResult> RescheduleAppointment(Guid id, DoctorDTO doctor, DateOnly date, TimeOnly time, CancellationToken cancellationToken = default)
+        [HttpPut("{id}/{date}/{time}/reschedule")]
+        public async Task<IActionResult> RescheduleAppointment([FromRoute] Guid id, [FromBody] DoctorDTO doctor,
+            [FromRoute] DateOnly date, [FromRoute] TimeOnly time, CancellationToken cancellationToken = default)
         {
             await _appointmentService.RescheduleAppointmentAsync(id, doctor, date, time, cancellationToken);
             return Accepted();

@@ -15,7 +15,7 @@ namespace AppointmentsAPI.Persistence.Repositories
         }
         public async Task CreateAsync(Result result, CancellationToken cancellationToken = default)
         {
-            if(!_appointmentsContext.Appointments.Any(x => x.Id == result.AppointmentId))
+            if (!_appointmentsContext.Appointments.Any(x => x.Id == result.AppointmentId))
             {
                 throw new AppointmentNotFoundException(result.AppointmentId);
             }
@@ -28,7 +28,7 @@ namespace AppointmentsAPI.Persistence.Repositories
             var result = await GetFullDataResults()
                                     .Where(x => x.AppointmentId == appointmentId)
                                     .FirstOrDefaultAsync(cancellationToken);
-            if(result == null)
+            if (result == null)
             {
                 throw new ResultForAppointmentNotFoundException(appointmentId);
             }
