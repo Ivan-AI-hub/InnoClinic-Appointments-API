@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppointmentsAPI.Application
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppointmentsAPI.Application", "AppointmentsAPI.Application\AppointmentsAPI.Application.csproj", "{35D4EF22-E15D-4D3F-9432-28CA6196C603}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{F1429F10-A2D9-4CDB-A14D-43A0DF8486CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppointmentsAPI.Persistence", "AppointmentsAPI.Persistence\AppointmentsAPI.Persistence.csproj", "{99871EAC-7717-4540-84A0-4357689EAC6E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,9 +31,18 @@ Global
 		{35D4EF22-E15D-4D3F-9432-28CA6196C603}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35D4EF22-E15D-4D3F-9432-28CA6196C603}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35D4EF22-E15D-4D3F-9432-28CA6196C603}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99871EAC-7717-4540-84A0-4357689EAC6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99871EAC-7717-4540-84A0-4357689EAC6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99871EAC-7717-4540-84A0-4357689EAC6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99871EAC-7717-4540-84A0-4357689EAC6E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{54CFFF89-9B6E-45BE-A3B2-B6B8925ECED1} = {F1429F10-A2D9-4CDB-A14D-43A0DF8486CA}
+		{7BF1DF10-ED11-4DDC-B873-B3ACB5F27B16} = {F1429F10-A2D9-4CDB-A14D-43A0DF8486CA}
+		{35D4EF22-E15D-4D3F-9432-28CA6196C603} = {F1429F10-A2D9-4CDB-A14D-43A0DF8486CA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {23791528-A678-42F0-A514-BF83F6886729}

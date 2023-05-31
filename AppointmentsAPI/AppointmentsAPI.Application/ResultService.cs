@@ -37,8 +37,7 @@ namespace AppointmentsAPI.Application
         {
             await ValidateModel(model, _editValidator, cancellationToken);
 
-            var result = _mapper.Map<Result>(model);
-            await _resultRepository.UpdateAsync(id, result, cancellationToken);
+            await _resultRepository.UpdateAsync(id, model.Complaints, model.Conclusion, model.Recomendations, cancellationToken);
         }
 
         public async Task<ResultDTO> GetResultByAppointmentAsync(Guid appointmentId, CancellationToken cancellationToken = default)

@@ -46,18 +46,6 @@ namespace AppointmentsAPI.Application
             return _mapper.Map<IEnumerable<AppointmentDTO>>(appointments);
         }
 
-        public async Task<IEnumerable<AppointmentDTO>> GetAppointmentsByDoctorAsync(Guid doctorId, CancellationToken cancellationToken = default)
-        {
-            var appointments = await _appointmentRepository.GetByDoctorAsync(doctorId, cancellationToken);
-            return _mapper.Map<IEnumerable<AppointmentDTO>>(appointments);
-        }
-
-        public async Task<IEnumerable<AppointmentDTO>> GetAppointmentsHistoryAsync(Guid patientId, CancellationToken cancellationToken = default)
-        {
-            var appointments = await _appointmentRepository.GetByPatientAsync(patientId, cancellationToken);
-            return _mapper.Map<IEnumerable<AppointmentDTO>>(appointments);
-        }
-
         public Task RescheduleAppointmentAsync(Guid Id, DoctorDTO doctor, DateOnly date, TimeOnly time, CancellationToken cancellationToken = default)
         {
             return _appointmentRepository.RescheduleAsync(Id, _mapper.Map<Doctor>(doctor), date, time, cancellationToken);
