@@ -10,9 +10,9 @@ namespace AppointmentsAPI.Application
 {
     public class AppointmentService : BaseService, IAppointmentService
     {
-        private IAppointmentRepository _appointmentRepository;
-        private IValidator<CreateAppointmentModel> _createValidator;
-        private IMapper _mapper;
+        private readonly IAppointmentRepository _appointmentRepository;
+        private readonly IValidator<CreateAppointmentModel> _createValidator;
+        private readonly IMapper _mapper;
         public AppointmentService(IAppointmentRepository appointmentRepository, IValidator<CreateAppointmentModel> createValidator, IMapper mapper)
         {
             _appointmentRepository = appointmentRepository;

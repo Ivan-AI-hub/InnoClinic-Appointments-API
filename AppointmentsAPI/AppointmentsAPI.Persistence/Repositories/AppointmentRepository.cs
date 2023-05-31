@@ -7,7 +7,7 @@ namespace AppointmentsAPI.Persistence.Repositories
 {
     public class AppointmentRepository : IAppointmentRepository
     {
-        private AppointmentsContext _appointmentsContext;
+        private readonly AppointmentsContext _appointmentsContext;
 
         public AppointmentRepository(AppointmentsContext appointmentsContext)
         {

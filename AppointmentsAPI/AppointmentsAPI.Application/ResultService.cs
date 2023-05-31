@@ -9,10 +9,10 @@ namespace AppointmentsAPI.Application
 {
     public class ResultService : BaseService, IResultService
     {
-        private IResultRepository _resultRepository;
-        private IValidator<CreateResultModel> _createValidator;
-        private IValidator<EditResultModel> _editValidator;
-        private IMapper _mapper;
+        private readonly IResultRepository _resultRepository;
+        private readonly IValidator<CreateResultModel> _createValidator;
+        private readonly IValidator<EditResultModel> _editValidator;
+        private readonly IMapper _mapper;
 
         public ResultService(IResultRepository resultRepository, IValidator<CreateResultModel> createValidator,
                             IValidator<EditResultModel> editValidator, IMapper mapper)
@@ -23,12 +23,12 @@ namespace AppointmentsAPI.Application
             _mapper = mapper;
         }
 
-        public async Task<ResultDTO> CreateResultAsync(CreateResultModel model, CancellationToken cancellationToken = default)
+        public async Task<ResultDTO> AddResultAsync(CreateResultModel model, CancellationToken cancellationToken = default)
         {
             await ValidateModel(model, _createValidator, cancellationToken);
 
             var result = _mapper.Map<Result>(model);
-            await _resultRepository.CreateAsync(result, cancellationToken);
+            await _resultRepository.AddAsync(result, cancellationToken);
 
             return _mapper.Map<ResultDTO>(result);
         }

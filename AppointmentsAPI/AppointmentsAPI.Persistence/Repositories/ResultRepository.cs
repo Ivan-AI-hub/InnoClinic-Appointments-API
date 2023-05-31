@@ -7,13 +7,13 @@ namespace AppointmentsAPI.Persistence.Repositories
 {
     public class ResultRepository : IResultRepository
     {
-        private AppointmentsContext _appointmentsContext;
+        private readonly AppointmentsContext _appointmentsContext;
 
         public ResultRepository(AppointmentsContext appointmentsContext)
         {
             _appointmentsContext = appointmentsContext;
         }
-        public async Task CreateAsync(Result result, CancellationToken cancellationToken = default)
+        public async Task AddAsync(Result result, CancellationToken cancellationToken = default)
         {
             if (!_appointmentsContext.Appointments.Any(x => x.Id == result.AppointmentId))
             {
