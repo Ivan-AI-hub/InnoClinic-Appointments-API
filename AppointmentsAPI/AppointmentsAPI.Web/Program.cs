@@ -7,7 +7,9 @@ using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.ConfigureLogger();
 builder.Services.ConfigureSqlContext(builder.Configuration, "DefaultConnection");
+builder.Services.ConfigureMassTransit(builder.Configuration, "MassTransitSettings");
 builder.Services.ConfigureRepositories();
 builder.Services.ConfigureSwagger();
 builder.Services.ConfigureServices();

@@ -3,9 +3,13 @@ using AppointmentsAPI.Application.Abstraction;
 using AppointmentsAPI.Domain.Interfaces;
 using AppointmentsAPI.Persistence;
 using AppointmentsAPI.Persistence.Repositories;
+using AppointmentsAPI.Presentation.Consumers;
+using AppointmentsAPI.Web.Settings;
+using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Serilog;
 
 namespace AppointmentsAPI.Web.Extensions
 {
@@ -22,11 +26,19 @@ namespace AppointmentsAPI.Web.Extensions
         {
             services.AddScoped<IAppointmentRepository, AppointmentRepository>();
             services.AddScoped<IResultRepository, ResultRepository>();
+
+            services.AddScoped<IDoctorRepository, DoctorRepository>();
+            services.AddScoped<IPatientRepository, PatientRepository>();
+            services.AddScoped<IServiceRepository, ServiceRepository>();
         }
         public static void ConfigureServices(this IServiceCollection services)
         {
             services.AddScoped<IAppointmentService, AppointmentService>();
             services.AddScoped<IResultService, ResultService>();
+
+            services.AddScoped<IDoctorService, DoctorService>();
+            services.AddScoped<IPatientService, PatientService>();
+            services.AddScoped<IServiceService, ServiceService>();
         }
 
         public static void ConfigureJWT(this IServiceCollection services, IConfiguration configuration)
@@ -66,6 +78,38 @@ namespace AppointmentsAPI.Web.Extensions
                     }
                 });
                 s.UseDateOnlyTimeOnlyStringConverters();
+            });
+        }
+
+        public static void ConfigureMassTransit(this IServiceCollection services, IConfiguration configuration, string massTransitSettingsName)
+        {
+            var settings = configuration.GetSection(massTransitSettingsName).Get<MassTransitSettings>();
+            services.AddMassTransit(x =>
+            {
+                x.AddConsumersFromNamespaceContaining<ServiceNameUpdatedConsumer>();
+                x.AddConsumeObserver<ConsumeObserver>();
+                x.UsingRabbitMq((context, cfg) =>
+                {
+                    cfg.Host(settings.Host, settings.VirtualHost, h =>
+                    {
+                        h.Username(settings.UserName);
+                        h.Password(settings.Password);
+                    });
+                    cfg.AddRawJsonSerializer();
+                    cfg.ConfigureEndpoints(context);
+                });
+            });
+        }
+
+        public static void ConfigureLogger(this IServiceCollection services)
+        {
+            var logger = new LoggerConfiguration()
+                .MinimumLevel.Error()
+                .WriteTo.Console()
+                .CreateLogger();
+            services.AddLogging(builder =>
+            {
+                builder.AddSerilog(logger);
             });
         }
     }
