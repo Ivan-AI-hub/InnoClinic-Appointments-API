@@ -1,4 +1,4 @@
-﻿using AppointmentsAPI.Application.Abstraction.AggregatesModels.AppointmentAggregate;
+﻿using AppointmentsAPI.Application.Abstraction.Models;
 using FluentValidation;
 
 namespace AppointmentsAPI.Application.Validators

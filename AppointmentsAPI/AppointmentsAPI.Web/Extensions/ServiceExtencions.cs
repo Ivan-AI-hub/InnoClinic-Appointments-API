@@ -25,7 +25,6 @@ namespace AppointmentsAPI.Web.Extensions
         public static void ConfigureRepositories(this IServiceCollection services)
         {
             services.AddScoped<IAppointmentRepository, AppointmentRepository>();
-            services.AddScoped<IResultRepository, ResultRepository>();
 
             services.AddScoped<IDoctorRepository, DoctorRepository>();
             services.AddScoped<IPatientRepository, PatientRepository>();
@@ -34,7 +33,6 @@ namespace AppointmentsAPI.Web.Extensions
         public static void ConfigureServices(this IServiceCollection services)
         {
             services.AddScoped<IAppointmentService, AppointmentService>();
-            services.AddScoped<IResultService, ResultService>();
 
             services.AddScoped<IDoctorService, DoctorService>();
             services.AddScoped<IPatientService, PatientService>();

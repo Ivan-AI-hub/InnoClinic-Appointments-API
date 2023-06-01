@@ -1,4 +1,4 @@
-﻿namespace AppointmentsAPI.Application.Abstraction.AggregatesModels.AppointmentAggregate
+﻿namespace AppointmentsAPI.Application.Abstraction.Models
 {
     public class AppointmentsFiltrationModel
     {

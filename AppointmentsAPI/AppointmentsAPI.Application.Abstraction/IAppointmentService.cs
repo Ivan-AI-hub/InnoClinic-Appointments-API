@@ -1,4 +1,4 @@
-﻿using AppointmentsAPI.Application.Abstraction.AggregatesModels.AppointmentAggregate;
+﻿using AppointmentsAPI.Application.Abstraction.Models;
 
 namespace AppointmentsAPI.Application.Abstraction
 {

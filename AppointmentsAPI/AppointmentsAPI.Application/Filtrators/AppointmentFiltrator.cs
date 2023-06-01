@@ -1,4 +1,4 @@
-﻿using AppointmentsAPI.Application.Abstraction.AggregatesModels.AppointmentAggregate;
+﻿using AppointmentsAPI.Application.Abstraction.Models;
 using AppointmentsAPI.Domain;
 using AppointmentsAPI.Domain.Interfaces;
 

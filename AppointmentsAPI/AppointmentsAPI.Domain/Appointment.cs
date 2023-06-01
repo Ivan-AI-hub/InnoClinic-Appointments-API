@@ -5,7 +5,6 @@
         private Patient? _patient;
         private Doctor? _doctor;
         private Service? _service;
-        private Result? _result;
 
         public Guid Id { get; private set; } = Guid.NewGuid();
         public DateOnly Date { get; set; }

@@ -1,5 +1,5 @@
 ﻿using AppointmentsAPI.Application.Abstraction;
-using AppointmentsAPI.Application.Abstraction.AggregatesModels.AppointmentAggregate;
+using AppointmentsAPI.Application.Abstraction.Models;
 using AppointmentsAPI.Application.Filtrators;
 using AppointmentsAPI.Domain;
 using AppointmentsAPI.Domain.Interfaces;
