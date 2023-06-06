@@ -13,5 +13,9 @@
             LastName = lastName;
             MiddleName = middleName;
         }
+        public override string ToString()
+        {
+            return $"{FirstName} {MiddleName} {LastName}";
+        }
     }
 }

@@ -20,5 +20,6 @@
         public Task ApproveAsync(Guid id, CancellationToken cancellationToken = default);
         public Task<IEnumerable<Appointment>> GetAppointmentsAsync(int pageSize, int pageNumber, IFiltrator<Appointment> filtrator,
                                                               CancellationToken cancellationToken = default);
+        public Task<Appointment> GetAppointmentById(Guid id, CancellationToken cancellationToken);
     }
 }

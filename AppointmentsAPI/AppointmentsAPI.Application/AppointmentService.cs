@@ -5,17 +5,21 @@ using AppointmentsAPI.Domain;
 using AppointmentsAPI.Domain.Interfaces;
 using AutoMapper;
 using FluentValidation;
+using MassTransit;
+using SharedEvents.Models;
 
 namespace AppointmentsAPI.Application
 {
     public class AppointmentService : BaseService, IAppointmentService
     {
         private readonly IAppointmentRepository _appointmentRepository;
+        private readonly IPublishEndpoint _publishEndpoint;
         private readonly IValidator<CreateAppointmentModel> _createValidator;
         private readonly IMapper _mapper;
-        public AppointmentService(IAppointmentRepository appointmentRepository, IValidator<CreateAppointmentModel> createValidator, IMapper mapper)
+        public AppointmentService(IAppointmentRepository appointmentRepository, IPublishEndpoint publishEndpoint, IValidator<CreateAppointmentModel> createValidator, IMapper mapper)
         {
             _appointmentRepository = appointmentRepository;
+            _publishEndpoint = publishEndpoint;
             _createValidator = createValidator;
             _mapper = mapper;
         }
@@ -29,9 +33,15 @@ namespace AppointmentsAPI.Application
             return _mapper.Map<AppointmentDTO>(appointment);
         }
 
-        public Task ApproveAppointmentAsync(Guid id, CancellationToken cancellationToken = default)
+        public async Task ApproveAppointmentAsync(Guid id, CancellationToken cancellationToken = default)
         {
-            return _appointmentRepository.ApproveAsync(id, cancellationToken);
+            await _appointmentRepository.ApproveAsync(id, cancellationToken);
+            var appointment = await _appointmentRepository.GetAppointmentById(id, cancellationToken);
+            await _publishEndpoint.Publish(new AppointmentApproved(appointment.PatientId,
+                                                             appointment.Patient!.ToString(),
+                                                             appointment.Doctor!.ToString(),
+                                                             appointment.Date.ToDateTime(appointment.Time),
+                                                             appointment.Service!.Name));
         }
 
         public Task CancelAppointmentAsync(Guid id, CancellationToken cancellationToken = default)

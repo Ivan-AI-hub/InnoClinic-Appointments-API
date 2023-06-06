@@ -61,6 +61,16 @@ namespace AppointmentsAPI.Persistence.Repositories
             await _appointmentsContext.SaveChangesAsync(cancellationToken);
         }
 
+        public async Task<Appointment> GetAppointmentById(Guid id, CancellationToken cancellationToken)
+        {
+            var appointment = await GetFullDataAppointments().FirstOrDefaultAsync(x => x.Id == id);
+            if (appointment == null)
+            {
+                throw new AppointmentNotFoundException(id);
+            }
+            return appointment;
+        }
+
         public async Task<IEnumerable<Appointment>> GetAppointmentsAsync(int pageSize, int pageNumber, IFiltrator<Appointment> filtrator, CancellationToken cancellationToken = default)
         {
             var appointments = GetFullDataAppointments();
