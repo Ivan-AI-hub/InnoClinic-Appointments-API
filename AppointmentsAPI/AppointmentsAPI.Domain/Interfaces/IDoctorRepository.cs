@@ -2,6 +2,8 @@
 {
     public interface IDoctorRepository
     {
-        public Task UpdateFullNameAsync(Guid id, string firstName, string middleName, string lastName, CancellationToken cancellationToken = default);
+        public Task UpdateAsync(Guid id, Doctor doctor, CancellationToken cancellationToken = default);
+        public Task CreateAsync(Doctor doctor, CancellationToken cancellationToken = default);
+        public Task DeleteAsync(Guid id, CancellationToken cancellationToken = default);
     }
 }

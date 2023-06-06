@@ -9,5 +9,9 @@
         {
             Name = name;
         }
+        public Service(Guid id, string name) : this(name)
+        {
+            Id = id;
+        }
     }
 }

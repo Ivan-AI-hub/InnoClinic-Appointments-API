@@ -1,4 +1,5 @@
-﻿using AppointmentsAPI.Domain.Exceptions;
+﻿using AppointmentsAPI.Domain;
+using AppointmentsAPI.Domain.Exceptions;
 using AppointmentsAPI.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,17 +14,33 @@ namespace AppointmentsAPI.Persistence.Repositories
             _context = context;
         }
 
-        public async Task UpdateFullNameAsync(Guid id, string firstName, string middleName, string lastName, CancellationToken cancellationToken = default)
+        public async Task CreateAsync(Patient patient, CancellationToken cancellationToken = default)
+        {
+            await _context.Patients.AddAsync(patient, cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task DeleteAsync(Guid id, CancellationToken cancellationToken = default)
         {
             var patient = await _context.Patients.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
             if (patient == null)
             {
-                //do something
                 throw new PatientNotFoundException(id);
             }
-            patient.FirstName = firstName;
-            patient.MiddleName = middleName;
-            patient.LastName = lastName;
+            _context.Patients.Remove(patient);
+            await _context.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task UpdateAsync(Guid id, Patient patient, CancellationToken cancellationToken = default)
+        {
+            var dataPatient = await _context.Patients.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+            if (dataPatient == null)
+            {
+                throw new PatientNotFoundException(id);
+            }
+            dataPatient.FirstName = patient.FirstName;
+            dataPatient.MiddleName = patient.MiddleName;
+            dataPatient.LastName = patient.LastName;
             await _context.SaveChangesAsync(cancellationToken);
         }
     }

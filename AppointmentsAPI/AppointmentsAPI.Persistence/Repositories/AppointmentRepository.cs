@@ -16,19 +16,19 @@ namespace AppointmentsAPI.Persistence.Repositories
 
         public async Task AddAsync(Appointment appointment, CancellationToken cancellationToken = default)
         {
-            if (await _appointmentsContext.Doctors.AnyAsync(x => x.Id == appointment.DoctorId))
+            if (!await _appointmentsContext.Doctors.AnyAsync(x => x.Id == appointment.DoctorId))
             {
-                appointment.Doctor = _appointmentsContext.Doctors.First(x => x.Id == appointment.DoctorId);
+                throw new DoctorNotFoundException(appointment.DoctorId);
             }
 
-            if (await _appointmentsContext.Patients.AnyAsync(x => x.Id == appointment.PatientId))
+            if (!await _appointmentsContext.Patients.AnyAsync(x => x.Id == appointment.PatientId))
             {
-                appointment.Patient = _appointmentsContext.Patients.First(x => x.Id == appointment.PatientId);
+                throw new PatientNotFoundException(appointment.PatientId);
             }
 
-            if (await _appointmentsContext.Services.AnyAsync(x => x.Id == appointment.ServiceId))
+            if (!await _appointmentsContext.Services.AnyAsync(x => x.Id == appointment.ServiceId))
             {
-                appointment.Service = _appointmentsContext.Services.First(x => x.Id == appointment.ServiceId);
+                throw new ServiceNotFoundException(appointment.ServiceId);
             }
 
             await _appointmentsContext.Appointments.AddAsync(appointment, cancellationToken);
@@ -83,6 +83,11 @@ namespace AppointmentsAPI.Persistence.Repositories
 
         public async Task RescheduleAsync(Guid id, Guid doctorId, DateOnly date, TimeOnly time, CancellationToken cancellationToken = default)
         {
+            if (!await _appointmentsContext.Doctors.AnyAsync(x => x.Id == doctorId))
+            {
+                throw new DoctorNotFoundException(doctorId);
+            }
+
             var appointment = await _appointmentsContext.Appointments
                                             .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
             if (appointment == null)

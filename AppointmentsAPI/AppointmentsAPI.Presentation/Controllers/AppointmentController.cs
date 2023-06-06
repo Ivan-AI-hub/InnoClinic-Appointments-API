@@ -47,7 +47,7 @@ namespace AppointmentsAPI.Presentation.Controllers
             return Ok(appointments);
         }
 
-        [HttpPut("{id}/cancel")]
+        [HttpDelete("{id}")]
         [ProducesResponseType(202)]
         [ProducesResponseType(typeof(ErrorDetails), 400)]
         [ProducesResponseType(typeof(ErrorDetails), 500)]

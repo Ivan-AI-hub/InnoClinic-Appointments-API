@@ -1,8 +1,8 @@
 ﻿namespace AppointmentsAPI.Application.Abstraction.Models
 {
-    public record CreateAppointmentModel(PatientDTO Patient,
-                                         DoctorDTO Doctor,
-                                         ServiceDTO Service,
+    public record CreateAppointmentModel(Guid PatientId,
+                                         Guid DoctorId,
+                                         Guid ServiceId,
                                          DateOnly Date,
                                          TimeOnly Time);
 }

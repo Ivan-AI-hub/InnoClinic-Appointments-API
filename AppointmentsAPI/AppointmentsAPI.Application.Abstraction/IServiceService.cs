@@ -2,6 +2,7 @@
 {
     public interface IServiceService
     {
-        public Task UpdateNameAsync(Guid id, string name, CancellationToken cancellationToken);
+        public Task UpdateAsync(Guid id, string name, CancellationToken cancellationToken);
+        public Task CreateAsync(Guid id, string name, CancellationToken cancellationToken);
     }
 }

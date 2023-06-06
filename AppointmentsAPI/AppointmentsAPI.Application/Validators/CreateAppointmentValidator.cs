@@ -7,9 +7,9 @@ namespace AppointmentsAPI.Application.Validators
     {
         public CreateAppointmentValidator()
         {
-            RuleFor(x => x.Patient).NotNull();
-            RuleFor(x => x.Doctor).NotNull();
-            RuleFor(x => x.Service).NotNull();
+            RuleFor(x => x.PatientId).NotNull();
+            RuleFor(x => x.DoctorId).NotNull();
+            RuleFor(x => x.ServiceId).NotNull();
             RuleFor(x => x.Date).NotEmpty().NotNull();
             RuleFor(x => x.Time).NotEmpty().NotNull();
         }

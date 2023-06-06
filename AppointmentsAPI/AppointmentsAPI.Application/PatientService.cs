@@ -1,4 +1,5 @@
 ﻿using AppointmentsAPI.Application.Abstraction;
+using AppointmentsAPI.Domain;
 using AppointmentsAPI.Domain.Interfaces;
 
 namespace AppointmentsAPI.Application
@@ -12,9 +13,21 @@ namespace AppointmentsAPI.Application
             _patientRepository = patientRepository;
         }
 
-        public async Task UpdateFullNameAsync(Guid id, string firstName, string middleName, string lastName, CancellationToken cancellationToken)
+        public async Task CreateAsync(Guid id, string firstName, string middleName, string lastName, CancellationToken cancellationToken)
         {
-            await _patientRepository.UpdateFullNameAsync(id, firstName, middleName, lastName, cancellationToken);
+            var patient = new Patient(id, firstName, middleName, lastName);
+            await _patientRepository.CreateAsync(patient, cancellationToken);
+        }
+
+        public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
+        {
+            await _patientRepository.DeleteAsync(id, cancellationToken);
+        }
+
+        public async Task UpdateAsync(Guid id, string firstName, string middleName, string lastName, CancellationToken cancellationToken)
+        {
+            var patient = new Patient(id, firstName, middleName, lastName);
+            await _patientRepository.UpdateAsync(id, patient, cancellationToken);
         }
     }
 }

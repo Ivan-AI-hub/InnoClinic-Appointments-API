@@ -84,7 +84,7 @@ namespace AppointmentsAPI.Web.Extensions
             var settings = configuration.GetSection(massTransitSettingsName).Get<MassTransitSettings>();
             services.AddMassTransit(x =>
             {
-                x.AddConsumersFromNamespaceContaining<ServiceNameUpdatedConsumer>();
+                x.AddConsumersFromNamespaceContaining<ServiceUpdatedConsumer>();
                 x.AddConsumeObserver<ConsumeObserver>();
                 x.UsingRabbitMq((context, cfg) =>
                 {

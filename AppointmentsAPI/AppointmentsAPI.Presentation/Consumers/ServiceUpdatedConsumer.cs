@@ -4,19 +4,19 @@ using SharedEvents.Models;
 
 namespace AppointmentsAPI.Presentation.Consumers
 {
-    public class ServiceNameUpdatedConsumer : IConsumer<ServiceNameUpdated>
+    public class ServiceUpdatedConsumer : IConsumer<ServiceUpdated>
     {
         private readonly IServiceService _serviceService;
 
-        public ServiceNameUpdatedConsumer(IServiceService serviceService)
+        public ServiceUpdatedConsumer(IServiceService serviceService)
         {
             _serviceService = serviceService;
         }
 
-        public async Task Consume(ConsumeContext<ServiceNameUpdated> context)
+        public async Task Consume(ConsumeContext<ServiceUpdated> context)
         {
             var eventModel = context.Message;
-            await _serviceService.UpdateNameAsync(eventModel.Id, eventModel.Name, context.CancellationToken);
+            await _serviceService.UpdateAsync(eventModel.Id, eventModel.Name, context.CancellationToken);
         }
     }
 }
