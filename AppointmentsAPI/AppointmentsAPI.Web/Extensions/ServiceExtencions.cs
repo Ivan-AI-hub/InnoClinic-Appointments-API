@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Serilog;
+using SharedEvents.Models;
 
 namespace AppointmentsAPI.Web.Extensions
 {
@@ -94,7 +95,7 @@ namespace AppointmentsAPI.Web.Extensions
                         h.Password(settings.Password);
                     });
                     cfg.AddRawJsonSerializer();
-                    cfg.ConfigureEndpoints(context);
+                    cfg.ConfigureEndpoints(context, new KebabCaseEndpointNameFormatter(true));
                 });
             });
         }
