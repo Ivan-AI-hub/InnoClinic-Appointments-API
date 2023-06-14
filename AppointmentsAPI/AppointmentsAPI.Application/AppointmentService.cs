@@ -41,7 +41,7 @@ namespace AppointmentsAPI.Application
                                                              appointment.Patient!.ToString(),
                                                              appointment.Doctor!.ToString(),
                                                              appointment.Date.ToDateTime(appointment.Time),
-                                                             appointment.Service!.Name));
+                                                             appointment.Service!.Name), cancellationToken);
         }
 
         public Task CancelAppointmentAsync(Guid id, CancellationToken cancellationToken = default)

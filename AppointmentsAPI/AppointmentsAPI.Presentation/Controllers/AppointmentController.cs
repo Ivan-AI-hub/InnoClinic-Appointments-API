@@ -17,23 +17,26 @@ namespace AppointmentsAPI.Presentation.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(typeof(AppointmentDTO), 200)]
+        [ProducesResponseType(typeof(AppointmentDTO), 201)]
         [ProducesResponseType(typeof(ErrorDetails), 400)]
         [ProducesResponseType(typeof(ErrorDetails), 500)]
         public async Task<IActionResult> Create(CreateAppointmentModel createModel, CancellationToken cancellationToken = default)
         {
             var appointment = await _appointmentService.AddAppointmentAsync(createModel, cancellationToken);
-            return Ok(appointment);
+            return CreatedAtAction(nameof(GetAppointments),
+                                   new { pageSize = 1, pageNumber = 1, createModel.DoctorId, createModel.PatientId, createModel.Date },
+                                   appointment);
         }
 
         [HttpPut("{id}/approve")]
-        [ProducesResponseType(202)]
+        [ProducesResponseType(204)]
         [ProducesResponseType(typeof(ErrorDetails), 400)]
+        [ProducesResponseType(typeof(ErrorDetails), 404)]
         [ProducesResponseType(typeof(ErrorDetails), 500)]
         public async Task<IActionResult> ApproveAppointment(Guid id, CancellationToken cancellationToken = default)
         {
             await _appointmentService.ApproveAppointmentAsync(id, cancellationToken);
-            return Accepted();
+            return NoContent();
         }
 
         [HttpGet("{pageSize}/{pageNumber}")]
@@ -48,24 +51,25 @@ namespace AppointmentsAPI.Presentation.Controllers
         }
 
         [HttpDelete("{id}")]
-        [ProducesResponseType(202)]
-        [ProducesResponseType(typeof(ErrorDetails), 400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(typeof(ErrorDetails), 404)]
         [ProducesResponseType(typeof(ErrorDetails), 500)]
         public async Task<IActionResult> CancelAppointment(Guid id, CancellationToken cancellationToken = default)
         {
             await _appointmentService.CancelAppointmentAsync(id, cancellationToken);
-            return Accepted();
+            return NoContent();
         }
 
         [HttpPut("{id}/reschedule")]
-        [ProducesResponseType(202)]
+        [ProducesResponseType(204)]
         [ProducesResponseType(typeof(ErrorDetails), 400)]
+        [ProducesResponseType(typeof(ErrorDetails), 404)]
         [ProducesResponseType(typeof(ErrorDetails), 500)]
         public async Task<IActionResult> RescheduleAppointment([FromRoute] Guid id, Guid doctorId,
             DateOnly date, TimeOnly time, CancellationToken cancellationToken = default)
         {
             await _appointmentService.RescheduleAppointmentAsync(id, doctorId, date, time, cancellationToken);
-            return Accepted();
+            return NoContent();
         }
     }
 }
