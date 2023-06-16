@@ -1,5 +1,6 @@
 using AppointmentsAPI.Application.Mappings;
 using AppointmentsAPI.Application.Validators;
+using AppointmentsAPI.Persistence;
 using AppointmentsAPI.Presentation.Controllers;
 using AppointmentsAPI.Web.Extensions;
 using AppointmentsAPI.Web.Middlewares;
@@ -24,6 +25,8 @@ builder.Services.AddValidatorsFromAssemblyContaining<CreateAppointmentValidator>
 builder.Services.AddDateOnlyTimeOnlyStringConverters();
 
 var app = builder.Build();
+
+app.MigrateDatabase<AppointmentsContext>();
 
 if (app.Environment.IsDevelopment())
 {
