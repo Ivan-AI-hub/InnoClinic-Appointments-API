@@ -65,10 +65,9 @@ namespace AppointmentsAPI.Presentation.Controllers
         [ProducesResponseType(typeof(ErrorDetails), 400)]
         [ProducesResponseType(typeof(ErrorDetails), 404)]
         [ProducesResponseType(typeof(ErrorDetails), 500)]
-        public async Task<IActionResult> RescheduleAppointment([FromRoute] Guid id, Guid doctorId,
-            DateOnly date, TimeOnly time, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> RescheduleAppointment([FromRoute] Guid id, [FromBody] RescheduleAppointmentModel model, CancellationToken cancellationToken = default)
         {
-            await _appointmentService.RescheduleAppointmentAsync(id, doctorId, date, time, cancellationToken);
+            await _appointmentService.RescheduleAppointmentAsync(id, model, cancellationToken);
             return NoContent();
         }
     }

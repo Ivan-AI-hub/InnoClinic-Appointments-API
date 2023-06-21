@@ -13,9 +13,9 @@ namespace AppointmentsAPI.Application.Abstraction
         /// </summary>
         public Task CancelAppointmentAsync(Guid id, CancellationToken cancellationToken = default);
         /// <summary>
-        /// Edits the appointment's doctor and date with time for appointment 
+        /// Edits the appointment's doctor and Date with Time for appointment 
         /// </summary>
-        public Task RescheduleAppointmentAsync(Guid id, Guid doctorId, DateOnly date, TimeOnly time, CancellationToken cancellationToken = default);
+        public Task RescheduleAppointmentAsync(Guid id, RescheduleAppointmentModel model, CancellationToken cancellationToken = default);
         /// <summary>
         /// Approves appointment
         /// </summary>

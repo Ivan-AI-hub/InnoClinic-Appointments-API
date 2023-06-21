@@ -4,7 +4,7 @@ using SharedEvents.Models;
 
 namespace AppointmentsAPI.Presentation.Consumers
 {
-    internal class PatientDeletedConsumer : IConsumer<PatientDeleted>
+    public class PatientDeletedConsumer : IConsumer<PatientDeleted>
     {
         private readonly IPatientService _patientService;
 

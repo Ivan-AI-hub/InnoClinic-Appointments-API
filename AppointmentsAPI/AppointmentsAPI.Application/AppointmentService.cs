@@ -56,9 +56,9 @@ namespace AppointmentsAPI.Application
             return _mapper.Map<IEnumerable<AppointmentDTO>>(appointments);
         }
 
-        public Task RescheduleAppointmentAsync(Guid Id, Guid doctorId, DateOnly date, TimeOnly time, CancellationToken cancellationToken = default)
+        public Task RescheduleAppointmentAsync(Guid Id, RescheduleAppointmentModel model, CancellationToken cancellationToken = default)
         {
-            return _appointmentRepository.RescheduleAsync(Id, doctorId, date, time, cancellationToken);
+            return _appointmentRepository.RescheduleAsync(Id, model.DoctorId, model.Date, model.Time, cancellationToken);
         }
     }
 }
