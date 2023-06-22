@@ -7,8 +7,8 @@ using AppointmentsAPI.Web.Middlewares;
 using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.ConfigureLogger(builder.Configuration, builder.Environment, "ElasticConfiguration:Uri");
 
-builder.Services.ConfigureLogger();
 builder.Services.ConfigureSqlContext(builder.Configuration, "DefaultConnection");
 builder.Services.ConfigureMassTransit(builder.Configuration, "MassTransitSettings");
 builder.Services.ConfigureRepositories();

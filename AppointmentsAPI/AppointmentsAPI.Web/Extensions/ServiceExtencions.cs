@@ -10,7 +10,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Serilog;
+using Serilog.Sinks.Elasticsearch;
 using SharedEvents.Models;
+using System.Reflection;
 
 namespace AppointmentsAPI.Web.Extensions
 {
@@ -39,7 +41,24 @@ namespace AppointmentsAPI.Web.Extensions
             services.AddScoped<IPatientService, PatientService>();
             services.AddScoped<IServiceService, ServiceService>();
         }
-
+        public static void ConfigureLogger(this IServiceCollection services, IConfiguration configuration, IHostEnvironment environment, string elasticUriSection)
+        {
+            services.AddSerilog((context, loggerConfiguration) =>
+            {
+                loggerConfiguration.Enrich.FromLogContext()
+                    .Enrich.WithMachineName()
+                    .WriteTo.Console()
+                    .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(configuration[elasticUriSection]))
+                    {
+                        IndexFormat = $"{Assembly.GetExecutingAssembly().GetName().Name!.ToLower().Replace(".", "-")}-{environment.EnvironmentName?.ToLower().Replace(".", "-")}-{DateTime.UtcNow:yyyy-MM}",
+                        AutoRegisterTemplate = true,
+                        NumberOfShards = 2,
+                        NumberOfReplicas = 1
+                    })
+                    .Enrich.WithProperty("Environment", environment.EnvironmentName)
+                    .ReadFrom.Configuration(configuration);
+            });
+        }
         public static void ConfigureJWT(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddAuthentication(opt =>
@@ -97,18 +116,6 @@ namespace AppointmentsAPI.Web.Extensions
                     cfg.AddRawJsonSerializer();
                     cfg.ConfigureEndpoints(context, new KebabCaseEndpointNameFormatter(true));
                 });
-            });
-        }
-
-        public static void ConfigureLogger(this IServiceCollection services)
-        {
-            var logger = new LoggerConfiguration()
-                .MinimumLevel.Error()
-                .WriteTo.Console()
-                .CreateLogger();
-            services.AddLogging(builder =>
-            {
-                builder.AddSerilog(logger);
             });
         }
     }
