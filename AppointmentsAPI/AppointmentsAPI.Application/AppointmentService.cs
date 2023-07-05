@@ -49,6 +49,12 @@ namespace AppointmentsAPI.Application
             return _appointmentRepository.DeleteAsync(id, cancellationToken);
         }
 
+        public async Task<AppointmentDTO> GetAppointmentAsync(Guid id, CancellationToken cancellationToken = default)
+        {
+            var appointment = await _appointmentRepository.GetAppointmentById(id, cancellationToken);
+            return _mapper.Map<AppointmentDTO>(appointment);
+        }
+
         public async Task<IEnumerable<AppointmentDTO>> GetAppointmentsAsync(int pageSize, int pageNumber, AppointmentsFiltrationModel filtrationModel, CancellationToken cancellationToken = default)
         {
             var filtrator = _mapper.Map<AppointmentFiltrator>(filtrationModel);

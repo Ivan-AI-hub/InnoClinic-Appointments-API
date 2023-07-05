@@ -23,6 +23,7 @@ namespace AppointmentsAPI.Application.Abstraction
         public Task<IEnumerable<AppointmentDTO>> GetAppointmentsAsync(int pageSize, int pageNumber,
             AppointmentsFiltrationModel filtrationModel, CancellationToken cancellationToken = default);
 
+        public Task<AppointmentDTO> GetAppointmentAsync(Guid id, CancellationToken cancellationToken = default);
     }
 
 }

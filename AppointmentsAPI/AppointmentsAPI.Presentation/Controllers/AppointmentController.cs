@@ -50,6 +50,16 @@ namespace AppointmentsAPI.Presentation.Controllers
             return Ok(appointments);
         }
 
+        [HttpGet("{id}")]
+        [ProducesResponseType(typeof(AppointmentDTO), 200)]
+        [ProducesResponseType(typeof(ErrorDetails), 400)]
+        [ProducesResponseType(typeof(ErrorDetails), 500)]
+        public async Task<IActionResult> GetAppointments(Guid id, CancellationToken cancellationToken = default)
+        {
+            var appointments = await _appointmentService.GetAppointmentAsync(id, cancellationToken);
+            return Ok(appointments);
+        }
+
         [HttpDelete("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(typeof(ErrorDetails), 404)]
