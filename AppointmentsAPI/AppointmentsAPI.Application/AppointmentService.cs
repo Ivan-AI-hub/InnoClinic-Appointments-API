@@ -37,7 +37,11 @@ namespace AppointmentsAPI.Application
         {
             await _appointmentRepository.ApproveAsync(id, cancellationToken);
             var appointment = await _appointmentRepository.GetAppointmentById(id, cancellationToken);
-            await _publishEndpoint.Publish(new AppointmentApproved(appointment.PatientId,
+            await _publishEndpoint.Publish(new AppointmentApproved(
+                                                             appointment.Id,
+                                                             appointment.PatientId,
+                                                             appointment.DoctorId,
+                                                             appointment.ServiceId,
                                                              appointment.Patient!.ToString(),
                                                              appointment.Doctor!.ToString(),
                                                              appointment.Date.ToDateTime(appointment.Time),

@@ -15,9 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppointmentsAPI.Persistence
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{0F841F8B-7AC6-4AB2-871A-93475505BFB9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppointmentsAPI.Presentation", "AppointmentsAPI.Presentation\AppointmentsAPI.Presentation.csproj", "{74786C13-390B-49F4-B62E-DC6E6C4F9697}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppointmentsAPI.Presentation", "AppointmentsAPI.Presentation\AppointmentsAPI.Presentation.csproj", "{74786C13-390B-49F4-B62E-DC6E6C4F9697}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppointmentsAPI.Web", "AppointmentsAPI.Web\AppointmentsAPI.Web.csproj", "{297CCDC4-6739-4CD8-A55C-701560972887}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppointmentsAPI.Web", "AppointmentsAPI.Web\AppointmentsAPI.Web.csproj", "{297CCDC4-6739-4CD8-A55C-701560972887}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
