@@ -75,7 +75,7 @@ namespace AppointmentsAPI.Persistence.Repositories
         {
             var appointments = GetFullDataAppointments();
             appointments = filtrator.Filtrate(appointments);
-            appointments = appointments.OrderBy(x => x.Date);
+            appointments = appointments.OrderByDescending(x => x.Date);
             appointments = appointments.Skip(pageSize * (pageNumber - 1)).Take(pageSize);
             return await appointments.ToListAsync(cancellationToken);
 
